@@ -1,25 +1,19 @@
-<mat-toolbar
-  class="mat-elevation-z3"
-  color="accent"
->
+<mat-toolbar class="mat-elevation-z3" color="primary">
   <span>My Map Points App</span>
   <span class="spacer"></span>
-  <button mat-icon-button
-  >
-
-    <mat-icon aria-hidden="false" aria-label="Home icon">home</mat-icon>
+  <button mat-icon-button (click)="redirectTo('dashboard')">
+    <mat-icon >home</mat-icon>
   </button>
 
-  <button mat-icon-button>
-    <mat-icon class="icon" aria-hidden="false" aria-label="Place icon">place</mat-icon>
+  <button mat-icon-button (click)="redirectTo('points')">
+    <mat-icon class="icon" aria-hidden="false" aria-label="Place icon"
+      >place</mat-icon
+    >
   </button>
 
-  <button mat-icon-button>
-    <mat-icon class="icon" aria-hidden="false" aria-label="Map icon">map</mat-icon>
+  <button mat-icon-button (click)="redirectTo('map')">
+    <mat-icon class="icon" aria-hidden="false" aria-label="Map icon"
+      >map</mat-icon
+    >
   </button>
-
- </mat-toolbar>
-
-<p>header works!</p>
-
-
+</mat-toolbar>
