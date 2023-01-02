@@ -9,7 +9,7 @@ import * as mapboxgl from 'mapbox-gl';
 })
 export class MapComponent {
 
-  public ngOnInit(){
+ngOnInit(){
     const map = new mapboxgl.Map({
       accessToken: 'pk.eyJ1IjoibWFyLW9saXZtYXJxdWVzIiwiYSI6ImNsY2R6enJ1eTAzZHozcHRhMzc1YXNndncifQ.IttFxmQ0ZzK1WlkMTH5C-w',
       container: 'map',
