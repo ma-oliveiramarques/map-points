@@ -31,7 +31,7 @@ export class PointsComponent {
         lat: -8.62597171350884,
         long: 40.86669099337182,
         name: "Ovar, Portugal",
-        color: "#006400"
+        color: "#191C7F"
       }, 
       {
         id: "2",
@@ -45,20 +45,20 @@ export class PointsComponent {
         lat: -77.79439451189849,
         long: 34.22011161652749,
         name: "Wrightsville Beach, USA",
-        color: "#FFFF00"
+        color: "#FF5500"
       },
       {
         id: "4",
         lat: 34.832266435574674,
         long: -19.733360773134624,
         name: "Cidade da Beira, Moçambique",
-        color: "#00FFFF"
+        color: "#3C0781"
       }
     ];
 
 
     try {
-      const nextPoint: IPoint = mockedPoints.filter((p: IPoint) => !this.pointsInserted.some((pi: IPoint) => pi === p.id))[0];
+      const nextPoint: IPoint = mockedPoints.filter((p: IPoint) => !this.pointsInserted.some((pi: IPoint) => pi.id === p.id))[0];
 
       await this.pointsService.insertPoint(nextPoint);
       this.pointsInserted.push(nextPoint);
