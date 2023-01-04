@@ -9,69 +9,74 @@ import {
 } from 'firebase/firestore';
 import { db } from 'firebase';
 import { IPoint } from '../interfaces/point';
+import { Injectable } from '@angular/core';
+import { SnackBarService } from './snackbar.service';
 
-const mockedPoints = [
-  {
-    id: "1",
-    lat: "-8.62597171350884",
-    long: "40.86669099337182",
-    name: "Ovar, Portugal",
-    color: "#006400"
-  }, 
-  {
-    id: "2",
-    lat: "-3.704953086665833",
-    long: "40.42741629677429",
-    name: "Madrid, Espanha",
-    color: "#8B0000"
-  },
-  {
-    id: "3",
-    lat: "-77.79439451189849",
-    long: "34.22011161652749",
-    name: "Wrightsville Beach, USA",
-    color: "#FFFF00"
-  },
-  {
-    id: "4",
-    lat: "34.832266435574674",
-    long: "-19.733360773134624",
-    name: "Cidade da Beira, Moçambique",
-    color: "#00FFFF"
+
+@Injectable({ providedIn: 'root'})
+export class PointsService{
+
+  pointDocumentName: string;
+
+  constructor(
+    public snackBarService: SnackBarService
+  ){
+    this.pointDocumentName = 'points';
   }
-]
 
-async function insertPoint(point: IPoint): Promise<DocumentReference<T>> {
+// insert or update one point in Firebase database
+async insertPoint(point: IPoint): Promise<void> {
+  const myDoc = doc(db, this.pointDocumentName, point.id);
+  await setDoc(myDoc, point);
+}
 
-  await setDoc(doc(db, "points", "1"), mockedPoints);
-  return DocumentReference<T>;
+// delete one point from the list by it's id
+async deletePoint(pointId : string): Promise<void> {
+  await deleteDoc(doc(db, this.pointDocumentName, pointId));
 }
 
 
-async function deletePoint(point: IPoint): Promise<void> {
-  await deleteDoc(doc(db, 'points', 'point'));
-}
+async getPoint(pointId: string): Promise<IPoint | undefined> {
+  let pointToReturn: IPoint | undefined = undefined;
 
-async function getPoint(point: IPoint): Promise<DocumentSnapshot<T>> {
-  const docRef = doc(db, 'points', 'point');
+  const docRef = doc(db, this.pointDocumentName, pointId);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    console.log('Document data:', docSnap.data());
-  } else {
-    // doc.data() will be undefined in this case
-    console.log('No such document!');
-  }
+    const docData = docSnap.data() as IPoint;
 
-  return DocumentSnapshot<T>;
+    pointToReturn = {
+      id: docSnap.id,
+      lat: docData.lat,
+      long: docData.long,
+      name: docData.name,
+      color: docData.color
+    }
+  } else {
+    this.snackBarService.show("There's no point with the given id", "Close");
+  }
+  return pointToReturn;
 }
 
-async function getPointsList(point: IPoint): Promise<QuerySnapshot<T>> {
-  const querySnapshot = await getDocs(collection(db, 'cities'));
+async  getPointsList(): Promise<IPoint[]> {
+  let pointsToReturn: IPoint[] = [];
+
+  const querySnapshot = await getDocs(collection(db, this.pointDocumentName));
+
   querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, ' => ', doc.data());
+    const docData = doc.data() as IPoint;
+
+    const newPointToReturn: IPoint = {
+      id: doc.id,
+      lat: docData.lat,
+      long: docData.long,
+      name: docData.name,
+      color: docData.color
+    }
+
+    pointsToReturn.push(newPointToReturn);
   });
 
-  return QuerySnapshot<T>;
+  return pointsToReturn;
+}
 }
