@@ -1,0 +1,118 @@
+<table
+  *ngIf="pointsList.length > 0"
+  mat-table
+  [dataSource]="pointsList"
+  class="mat-elevation-z8 demo-table"
+>
+  <!-- ID Column -->
+  <ng-container matColumnDef="id">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      ID
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let element"
+    >
+      {{ element.id }}
+    </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      Name
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let element"
+    >
+      {{ element.name }}
+    </td>
+  </ng-container>
+
+  <!-- Longitude Column -->
+  <ng-container matColumnDef="long">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      Longitude
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let element"
+    >
+      {{ element.long }}
+    </td>
+  </ng-container>
+
+  <!-- Latitude Column -->
+  <ng-container matColumnDef="lat">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      Latitude
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let element"
+    >
+      {{ element.lat }}
+    </td>
+  </ng-container>
+
+  <!-- Color Column -->
+  <ng-container matColumnDef="color">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      Color
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let element"
+    >
+      {{ element.color }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="delete">
+    <th
+      mat-header-cell
+      *matHeaderCellDef
+    >
+      Delete
+    </th>
+    <td
+      mat-cell
+      *matCellDef="let row"
+    >
+      <a (click)="deletePoint(row.id)">
+        <mat-icon
+          class="icon"
+          aria-hidden="false"
+          aria-label="Delete icon"
+          color="primary"
+          >delete</mat-icon
+        ></a
+      >
+    </td>
+  </ng-container>
+
+  <tr
+    mat-header-row
+    *matHeaderRowDef="displayedColumns"
+  ></tr>
+  <tr
+    mat-row
+    *matRowDef="let row; columns: displayedColumns"
+  ></tr>
+</table>

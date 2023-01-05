@@ -1,85 +1,99 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IPoint } from 'src/app/interfaces/point';
 import { PointsService } from 'src/app/services/points.service';
 import { SnackBarService } from 'src/app/services/snackbar.service';
-import { mockedPoints } from 'src/app/data/mocked-points';
 
 @Component({
   selector: 'app-points',
   templateUrl: './points.component.html',
-  styleUrls: ['./points.component.css']
+  styleUrls: ['./points.component.css'],
 })
 export class PointsComponent {
-
-  pointsInserted: IPoint[];
   pointIdToDelete: string;
   pointIdToGet: string;
-  mockedPoints: IPoint[];
 
-  constructor(
-    private pointsService: PointsService,
-    private snackBarService: SnackBarService,
-  ) {
-    this.pointsInserted = [];
+  // Create point form data
+  id: string;
+  long: number;
+  lat: number;
+  color: string;
+  name: string;
+
+  singlePointData: IPoint[];
+  allPointsData: IPoint[];
+
+  constructor(private pointsService: PointsService, private snackBarService: SnackBarService) {
     this.pointIdToDelete = '';
     this.pointIdToGet = '';
-    this.mockedPoints= mockedPoints;
-    
+
+    this.id = '';
+    this.long = 0;
+    this.lat = 0;
+    this.color = '#000000';
+    this.name = '';
+
+    this.singlePointData = [];
+    this.allPointsData = [];
   }
 
-// const mockedPoints: IPoint[] = 
+  /**
+   *
+   * @returns true if all the fields are filled, otherwise false
+   */
+  validateInput(): boolean {
+    if (!this.id || !this.long || !this.lat || !this.name) {
+      return false;
+    }
+    return true;
+  }
+
   async createPoint(): Promise<void> {
-
-    try {
-      const nextPoint: IPoint = this.mockedPoints.filter((p: IPoint) => !this.pointsInserted.some((pi: IPoint) => pi.id === p.id))[0];
-
-      await this.pointsService.insertPoint(nextPoint);
-      this.pointsInserted.push(nextPoint);
-      this.snackBarService.show("Point created successfully", "Close");
+    if (!this.validateInput()) {
+      this.snackBarService.show('Please, fill all the fields before submit', 'Close');
+      return;
     }
-    catch (err) {
-      this.snackBarService.show('One error occurred', 'Close')
-    }
+
+    const pointToCreate: IPoint = {
+      id: this.id,
+      long: this.long,
+      lat: this.lat,
+      color: this.color,
+      name: this.name,
+    };
+
+    await this.pointsService.insertPoint(pointToCreate);
+    this.snackBarService.show('Point created successfully', 'Close');
   }
 
-  async deletePoint(): Promise<void> {
-    if(!this.pointIdToDelete){
+  async deletePoint(pointId: string): Promise<void> {
+    if (!pointId) {
       this.snackBarService.show('Please, type the Point ID before you submit', 'Close');
       return;
     }
 
-    await this.pointsService.deletePoint(this.pointIdToDelete);
+    await this.pointsService.deletePoint(pointId);
     this.snackBarService.show('Point deleted successfully', 'Close');
   }
 
   async getPoint(): Promise<void> {
-    if (!this.pointIdToGet){
+    if (!this.pointIdToGet) {
       this.snackBarService.show('Please, type the Point ID before you submit', 'Close');
       return;
     }
 
     const myPoint = await this.pointsService.getPoint(this.pointIdToGet);
-    console.log(myPoint);
-    
-    // Create a DOM element
-    const div = document.getElementById('show-point');
-    const width = 600;
-    const height = 300;
-    const p = document.createElement('p');
-    p.innerHTML = `Point ID: ${this.pointIdToGet}` + '<br>' 
-                  + `Name: ${this.mockedPoints[myPoint - 1].name}` + '<br>'
-                  + `Longitude: ${this.mockedPoints[myPoint - 1].long}` + '<br>'
-                  + `Latitude: ${this.mockedPoints[myPoint - 1].lat}`;
-    div?.appendChild(p);
-  
-    div.style.backgroundColor = this.mockedPoints[this.pointIdToGet - 1].color;
-    div.style.width = `${width}px`;
-    div.style.height = `${height}px`;
-    div.style.backgroundSize = '100%';
+
+    if (myPoint) {
+      this.singlePointData.push(myPoint);
+    }
   }
 
   async getPointsList(): Promise<void> {
     const myList = await this.pointsService.getPointsList();
-    console.log(myList);
+
+    if (myList && myList.length > 0) {
+      this.allPointsData = myList;
+    }
   }
 }

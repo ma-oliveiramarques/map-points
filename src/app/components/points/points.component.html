@@ -1,23 +1,79 @@
 <div>
-  <button mat-raised-button color="warn" (click)="createPoint()">Create Point</button>
+  <mat-form-field appearance="fill">
+    <mat-label>Id</mat-label>
+    <input
+      matInput
+      [(ngModel)]="id"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Longitude</mat-label>
+    <input
+      matInput
+      [(ngModel)]="long"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Latitude</mat-label>
+    <input
+      matInput
+      [(ngModel)]="lat"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Color</mat-label>
+    <input
+      matInput
+      [(ngModel)]="color"
+      type="color"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      [(ngModel)]="name"
+    />
+  </mat-form-field>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="createPoint()"
+  >
+    Create Point
+  </button>
 </div>
 
 <div>
   <mat-form-field appearance="fill">
-    <input matInput [(ngModel)]="pointIdToDelete">
-    <button mat-raised-button color="warn" (click)="deletePoint()">Delete Point</button>
+    <mat-label>Id to Get</mat-label>
+    <input
+      matInput
+      [(ngModel)]="pointIdToGet"
+    />
+    <button
+      mat-raised-button
+      color="warn"
+      (click)="getPoint()"
+    >
+      Show Point
+    </button>
   </mat-form-field>
 </div>
+<app-point-table [pointsList]="singlePointData"></app-point-table>
 
 <div>
-  <mat-form-field appearance="fill">
-    <mat-label>Point Id</mat-label>
-    <input matInput [(ngModel)]="pointIdToGet">
-    <button mat-raised-button color="warn" (click)="getPoint()">Show Point</button>
-  </mat-form-field>
+  <button
+    mat-raised-button
+    color="warn"
+    (click)="getPointsList()"
+  >
+    List All Points
+  </button>
 </div>
-<div id="show-point"></div>
 
-<div>
-  <button mat-raised-button color="warn" (click)="getPointsList()">List All Points</button>
-</div>
+<app-point-table [pointsList]="allPointsData"></app-point-table>
