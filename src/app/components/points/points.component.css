@@ -1,6 +1,5 @@
 .card {
-margin-top: 2rem;
-
+  margin-top: 2rem;
   display: flex;
   align-content: center;
   flex-wrap: wrap;
@@ -10,11 +9,10 @@ margin-top: 2rem;
   max-width: 28rem;
 }
 
-
 .form-container {
   display: flex;
   display-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: flex-start;
 }
