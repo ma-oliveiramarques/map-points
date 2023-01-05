@@ -18,6 +18,8 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { PointTableComponent } from './components/point-table/point-table.component';
+import { MatCardModule } from '@angular/material/card';
+
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { PointTableComponent } from './components/point-table/point-table.compon
     FormsModule,
     MatSnackBarModule,
     MatTableModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

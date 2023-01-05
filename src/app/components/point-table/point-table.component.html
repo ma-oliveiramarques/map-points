@@ -4,6 +4,7 @@
   [dataSource]="pointsList"
   class="mat-elevation-z8 demo-table"
 >
+<h2>{{ pointsList.length === 1 ? 'Your Point:' : 'Points List:' }}</h2>
   <!-- ID Column -->
   <ng-container matColumnDef="id">
     <th
