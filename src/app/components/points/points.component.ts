@@ -54,6 +54,7 @@ export class PointsComponent {
       return;
     }
 
+    // build the point object
     const pointToCreate: IPoint = {
       id: this.id,
       long: this.long,
@@ -66,6 +67,7 @@ export class PointsComponent {
     this.snackBarService.show('Point created successfully', 'Close');
   }
 
+  // delete one point with the given id
   async deletePoint(pointId: string): Promise<void> {
     if (!pointId) {
       this.snackBarService.show('Please, type the Point ID before you submit', 'Close');
@@ -76,6 +78,7 @@ export class PointsComponent {
     this.snackBarService.show('Point deleted successfully', 'Close');
   }
 
+  // get one point by adding it to the array
   async getPoint(): Promise<void> {
     if (!this.pointIdToGet) {
       this.snackBarService.show('Please, type the Point ID before you submit', 'Close');
@@ -89,6 +92,7 @@ export class PointsComponent {
     }
   }
 
+  // get all points in an array
   async getPointsList(): Promise<void> {
     const myList = await this.pointsService.getPointsList();
 

@@ -1,4 +1,6 @@
 <div class="form-container">
+
+  <!-- First card - Create point -->
 <div class="card">
 <mat-card >
   <mat-card-header class="card-header">
@@ -40,7 +42,7 @@
 </mat-card>
 </div>
 
-
+<!-- Second card - get 1 point -->
 <div class="card">
   <mat-card >
     <mat-card-header class="card-header">
@@ -64,8 +66,10 @@
 </mat-card>
 </div>
 
+<!-- One point table  -->
   <app-point-table class="table" [pointsList]="singlePointData"></app-point-table>
   
+  <!-- Third card - list all points -->
   <div class="card">
     <mat-card >
       <mat-card-header class="card-header">
@@ -81,9 +85,7 @@
   </div>
 </div>
 
-
-
-
+<!-- Table with all points -->
   <app-point-table class="table" [pointsList]="allPointsData"></app-point-table>
 
 

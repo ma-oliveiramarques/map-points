@@ -8,7 +8,7 @@ import { PointsComponent } from '../points/points.component';
   styleUrls: ['./point-table.component.css'],
 })
 export class PointTableComponent extends PointsComponent implements OnChanges {
-  //TODO: how to pass info from one component to another in angular
+  
   @Input() pointsList: IPoint[];
   PointsComponent: PointsComponent;
 
